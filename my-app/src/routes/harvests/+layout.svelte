@@ -10,7 +10,7 @@
   
 
 {#if $page.url.pathname === '/harvests'}
-    <div class="container">
+    <div class="container p-4">
         <div class="slot-container">
             <slot></slot>
         </div>
@@ -27,11 +27,17 @@
 
 <style>
     .container {
-      @apply flex flex-col;
+        @apply flex flex-col;
     }
     .slot-container {
-      @apply overflow-y-scroll;
-      height: calc(100vh - 168px);
+        @apply overflow-y-scroll;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE 10+ */
+        height: calc(100vh - 168px);
+    }
+
+    .slot-container::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, and Edge */
     }
     .button-container {
         @apply flex pt-5 px-4;

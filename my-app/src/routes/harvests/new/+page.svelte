@@ -22,6 +22,8 @@
     let selectedVarietyId: string = '';
     let selectedClientId: string = '';
 
+    let creating = false;
+
     onMount(async () => {
         growers = await getGrowers();
         fruits = await getFruits();
@@ -47,6 +49,7 @@
     }
 
 	async function create() {
+        creating = true;
         try {
             const newHarvest = await createHarvest(
                 selectedGrowerId,
@@ -122,7 +125,13 @@
 
 </div>
 
-<button on:click={create} disabled='{!canCreate()}'>Crear Cosecha</button>
+<button on:click={create} disabled='{!canCreate()}' class="{creating ? 'animate-pulse' : 'animate-none'}">
+    {#if creating}
+        Creando cosecha...
+    {:else}
+        Crear Cosecha
+    {/if}
+</button>
 
 <style>
     .input-select-container {
