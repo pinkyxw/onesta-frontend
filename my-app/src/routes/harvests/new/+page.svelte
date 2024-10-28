@@ -38,6 +38,14 @@
         return selected || { varieties: [] };
     }
 
+    function canCreate() {
+        return selectedGrowerId &&
+            selectedFarmId &&
+            selectedVarietyId &&
+            selectedClientId &&
+            selectedFruitId;
+    }
+
 	async function create() {
         try {
             const newHarvest = await createHarvest(
@@ -114,7 +122,7 @@
 
 </div>
 
-<button on:click={create}>Crear Cosecha</button>
+<button on:click={create} disabled='{!canCreate()}'>Crear Cosecha</button>
 
 <style>
     .input-select-container {
