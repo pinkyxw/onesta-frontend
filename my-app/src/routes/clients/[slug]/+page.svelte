@@ -1,7 +1,9 @@
 <script lang="ts">
+  import type { Client } from '$lib/models/client.js';
 	import type { PageData } from './$types.js';
 
 	export let data: PageData;
+	const client = data as Client;
 </script>
 
 <div class="">
@@ -9,9 +11,9 @@
 	
 	<div class="mb-6">
 	  <h2 class="text-lg font-semibold mb-2">Información general</h2>
-	  <p><strong>ID:</strong> {data.id}</p>
-	  <p><strong>Nombre:</strong> {data.name} {data.lastName}</p>
-	  <p><strong>Email:</strong> {data.email}</p>
+	  <p><strong>ID:</strong> {client.id}</p>
+	  <p><strong>Nombre:</strong> {client.name} {client.lastName}</p>
+	  <p><strong>Email:</strong> {client.email}</p>
 	</div>
 </div>
 

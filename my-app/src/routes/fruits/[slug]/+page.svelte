@@ -1,7 +1,9 @@
 <script lang="ts">
+  import type { Fruit } from '$lib/models/fruit.js';
 	import type { PageData } from './$types.js';
 
 	export let data: PageData;
+	const fruit = data as Fruit;
 	
 </script>
 
@@ -10,14 +12,14 @@
 	
 	<div class="mb-6">
 	  <h2 class="text-lg font-semibold mb-2">Información general</h2>
-	  <p><strong>Nombre:</strong> {data.name}</p>
-	  <p><strong>ID:</strong> {data.id}</p>
+	  <p><strong>Nombre:</strong> {fruit.name}</p>
+	  <p><strong>ID:</strong> {fruit.id}</p>
 	</div>
 
 
 	<div>
 		<h2 class="text-lg font-semibold mb-2">Variedades</h2>
-			{#each data.varieties as variety}
+			{#each fruit.varieties as variety}
 				<p><strong>Nombre:</strong> {variety.name}</p>
 				<p><strong>ID:</strong> {variety.id}</p>
 				<br>

@@ -2,8 +2,9 @@
     import HarvestCard from '../../components/harvest-card.svelte';
     import { onMount } from 'svelte';
     import { getHarvests } from '$lib/api/harvest.js';
+    import type { Harvest } from '$lib/models/harvest.js';
   
-    let harvests: Array<any> = [];
+    let harvests: Array<Harvest> = [];
   
     onMount(async () => {
       harvests = await getHarvests();

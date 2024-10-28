@@ -1,42 +1,39 @@
-export async function getClients() {
-  try {
-    const response = await fetch('https://testapi.onesta.farm/v1/clients', {
+import type { Client } from "$lib/models/client.js";
+import { defaultErrorHandler } from "$lib/utils.js";
+import { BASE_BACKEND_URL, COMMON_HEADERS } from "../../constants/constants.js";
+
+
+const PATH_SEGMENT = 'clients'; 
+
+export async function getClients(): Promise<Client[]> {
+  return defaultErrorHandler(async () => {
+    const response = await fetch([BASE_BACKEND_URL, PATH_SEGMENT].join('/'), {
       method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      }
+      headers: COMMON_HEADERS
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch clients');
+      throw { status: response.status, message: 'Failed to fetch clients' };
     }
 
     const data = await response.json();
     return data.clients;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  });
 }
 
-export async function getClient(id: string) {
-  try {
-    const response = await fetch(`https://testapi.onesta.farm/v1/clients/${id}`, {
+export async function getClient(id: string): Promise<Client> {
+  return defaultErrorHandler(async () => {
+    const response = await fetch([BASE_BACKEND_URL, PATH_SEGMENT, id].join('/'), {
       method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      }
+      headers: COMMON_HEADERS
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch clients');
+      throw { status: response.status, message: 'Failed to fetch client' };
     }
 
     const data = await response.json();
-    return data.client;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+    return data.client as Client;
+  });
 }
   

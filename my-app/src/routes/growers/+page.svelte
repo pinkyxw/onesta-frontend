@@ -2,8 +2,9 @@
     import GrowerCard from '../../components/grower-card.svelte';
     import { onMount } from 'svelte';
     import { getGrowers } from '$lib/api/growers.js';
+  import type { Grower } from '$lib/models/grower.js';
   
-    let growers: Array<any> = [];
+    let growers: Array<Grower> = [];
   
     onMount(async () => {
       growers = await getGrowers();

@@ -5,13 +5,16 @@
     import { createHarvest } from '$lib/api/harvest.js';
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
+    import type { Farm, Grower } from '$lib/models/grower.js';
+    import type { Fruit, Variety } from '$lib/models/fruit.js';
+    import type { Client } from '$lib/models/client.js';
 
 
-    let growers: Array<any> = [];
-    let farms: Array<any> = [];
-    let fruits: Array<any> = [];
-    let varieties: Array<any> = [];
-    let clients: Array<any> = [];
+    let growers: Array<Grower> = [];
+    let farms: Array<Farm> = [];
+    let fruits: Array<Fruit> = [];
+    let varieties: Array<Variety> = [];
+    let clients: Array<Client> = [];
 
     let selectedGrowerId: string = '';
     let selectedFarmId: string = '';
@@ -26,22 +29,28 @@
     });
 
     function getSelectedGrower() {
-        return growers.find(grower => grower.id === selectedGrowerId);
+        const selected = growers.find(grower => grower.id === selectedGrowerId);
+        return selected || { farms: [] };
     }
 
     function getSelectedFruit() {
-        return fruits.find(fruit => fruit.id === selectedFruitId);
+        const selected = fruits.find(fruit => fruit.id === selectedFruitId);
+        return selected || { varieties: [] };
     }
 
 	async function create() {
-        const newHarvest = await createHarvest(
-            selectedGrowerId,
-            selectedFarmId,
-            selectedVarietyId,
-            selectedClientId,
-            selectedFruitId, // comodity
-        );
-        goto(`/harvests/${newHarvest.id}`);
+        try {
+            const newHarvest = await createHarvest(
+                selectedGrowerId,
+                selectedFarmId,
+                selectedVarietyId,
+                selectedClientId,
+                selectedFruitId, // comodity
+            );
+            goto(`/harvests/${newHarvest.id}`);
+        } catch (error) {
+            goto('/harvests');
+        }
 	}
 </script>
 

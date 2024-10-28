@@ -1,63 +1,55 @@
-export async function getHarvests() {
-  try {
-    const response = await fetch('https://testapi.onesta.farm/v1/harvests', {
+import type { Harvest } from "$lib/models/harvest.js";
+import { defaultErrorHandler } from "$lib/utils.js";
+import { BASE_BACKEND_URL, COMMON_HEADERS } from "../../constants/constants.js";
+
+
+const PATH_SEGMENT = 'harvests'; 
+
+export async function getHarvests(): Promise<Harvest[]>  {
+  return defaultErrorHandler(async () => {
+    const response = await fetch([BASE_BACKEND_URL, PATH_SEGMENT].join('/'), {
       method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      }
+      headers: COMMON_HEADERS
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch harvests');
+      throw { status: response.status, message: 'Failed to fetch harvests' };
     }
 
     const data = await response.json();
     return data.harvests;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  });
 }
 
-export async function getHarvest(id: string) {
-  try {
-    const response = await fetch(`https://testapi.onesta.farm/v1/harvests/${id}`, {
+export async function getHarvest(id: string): Promise<Harvest>  {
+  return defaultErrorHandler(async () => {
+    const response = await fetch([BASE_BACKEND_URL, PATH_SEGMENT, id].join('/'), {
       method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      }
+      headers: COMMON_HEADERS
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch harvests');
+      throw { status: response.status, message: 'Failed to fetch harvest' };
     }
 
     const data = await response.json();
     return data.harvest;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  });
 }
   
 export async function createHarvest(growerId: string, farmId: string, varietyId: string, clientId: string, commodityId: string) {
-  try {
-    const response = await fetch(`https://testapi.onesta.farm/v1/harvests`, {
+  return defaultErrorHandler(async () => {
+    const response = await fetch([BASE_BACKEND_URL, PATH_SEGMENT].join('/'), {
       method: 'POST',
 			body: JSON.stringify({ growerId, farmId, varietyId, clientId, commodityId }),
-      headers: {
-        'content-type': 'application/json'
-      }
+      headers: COMMON_HEADERS
     });
 
     if (!response.ok) {
-      throw new Error('Failed to create harvest');
+      throw { status: response.status, message: 'Failed to create harvest' };
     }
 
     const data = await response.json();
     return data.harvest;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  });
 }

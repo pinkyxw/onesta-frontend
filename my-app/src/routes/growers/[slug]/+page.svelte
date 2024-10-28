@@ -1,7 +1,9 @@
 <script lang="ts">
+  import type { Grower } from '$lib/models/grower.js';
 	import type { PageData } from './$types.js';
 
 	export let data: PageData;
+	const grower = data as Grower;
 	
 </script>
 
@@ -10,15 +12,15 @@
 	
 	<div class="mb-6">
 	  <h2 class="text-lg font-semibold mb-2">Información general</h2>
-	  <p><strong>Nombre:</strong> {data.name} {data.lastName}</p>
-	  <p><strong>Email:</strong> {data.email}</p>
-	  <p><strong>ID:</strong> {data.id}</p>
+	  <p><strong>Nombre:</strong> {grower.name} {grower.lastName}</p>
+	  <p><strong>Email:</strong> {grower.email}</p>
+	  <p><strong>ID:</strong> {grower.id}</p>
 	</div>
 
 
 	<div>
 		<h2 class="text-lg font-semibold mb-2">Campos</h2>
-			{#each data.farms as farm}
+			{#each grower.farms as farm}
 				<p><strong>Nombre:</strong> {farm.name}</p>
 				<p><strong>Dirección:</strong> {farm.address}</p>
 				<p><strong>ID:</strong> {farm.id}</p>

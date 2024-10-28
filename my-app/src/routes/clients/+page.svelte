@@ -2,8 +2,9 @@
     import ClientCard from '../../components/client-card.svelte';
     import { onMount } from 'svelte';
     import { getClients } from '$lib/api/clients.js';
+    import type { Client } from '$lib/models/client.js';
   
-    let clients: Array<any> = [];
+    let clients: Array<Client> = [];
   
     onMount(async () => {
       clients = await getClients();

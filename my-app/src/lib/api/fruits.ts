@@ -1,42 +1,39 @@
-export async function getFruits() {
-  try {
-    const response = await fetch('https://testapi.onesta.farm/v1/commodities', {
+import type { Fruit } from "$lib/models/fruit.js";
+import { defaultErrorHandler } from "$lib/utils.js";
+import { BASE_BACKEND_URL, COMMON_HEADERS } from "../../constants/constants.js";
+
+
+const PATH_SEGMENT = 'commodities'; 
+
+export async function getFruits(): Promise<Fruit[]> {
+  return defaultErrorHandler(async () => {
+    const response = await fetch([BASE_BACKEND_URL, PATH_SEGMENT].join('/'), {
       method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      }
+      headers: COMMON_HEADERS
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch fruits');
+      throw { status: response.status, message: 'Failed to fetch fruits' };
     }
 
     const data = await response.json();
     return data.commodities;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  });
 }
 
-export async function getFruit(id: string) {
-  try {
-    const response = await fetch(`https://testapi.onesta.farm/v1/commodities/${id}`, {
+export async function getFruit(id: string): Promise<Fruit> {
+  return defaultErrorHandler(async () => {
+    const response = await fetch([BASE_BACKEND_URL, PATH_SEGMENT, id].join('/'), {
       method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      }
+      headers: COMMON_HEADERS
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch fruit');
+      throw { status: response.status, message: 'Failed to fetch fruit' };
     }
 
     const data = await response.json();
     return data.commodity;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  });
 }
   

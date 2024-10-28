@@ -1,42 +1,39 @@
-export async function getGrowers() {
-  try {
-    const response = await fetch('https://testapi.onesta.farm/v1/growers', {
+import type { Grower } from "$lib/models/grower.js";
+import { defaultErrorHandler } from "$lib/utils.js";
+import { BASE_BACKEND_URL, COMMON_HEADERS } from "../../constants/constants.js";
+
+
+const PATH_SEGMENT = 'growers'; 
+
+export async function getGrowers(): Promise<Grower[]>  {
+  return defaultErrorHandler(async () => {
+    const response = await fetch([BASE_BACKEND_URL, PATH_SEGMENT].join('/'), {
       method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      }
+      headers: COMMON_HEADERS
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch growers');
+      throw { status: response.status, message: 'Failed to fetch growers' };
     }
 
     const data = await response.json();
     return data.growers;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  });
 }
 
-export async function getGrower(id: string) {
-  try {
-    const response = await fetch(`https://testapi.onesta.farm/v1/growers/${id}`, {
+export async function getGrower(id: string): Promise<Grower>  {
+  return defaultErrorHandler(async () => {
+    const response = await fetch([BASE_BACKEND_URL, PATH_SEGMENT, id].join('/'), {
       method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      }
+      headers: COMMON_HEADERS
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch grower');
+      throw { status: response.status, message: 'Failed to fetch grower' };
     }
 
     const data = await response.json();
     return data.grower;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  });
 }
   

@@ -2,8 +2,9 @@
     import FruitCard from '../../components/fruit-card.svelte';
     import { onMount } from 'svelte';
     import { getFruits } from '$lib/api/fruits.js';
+  import type { Fruit } from '$lib/models/fruit.js';
   
-    let fruits: Array<any> = [];
+    let fruits: Array<Fruit> = [];
   
     onMount(async () => {
       fruits = await getFruits();
