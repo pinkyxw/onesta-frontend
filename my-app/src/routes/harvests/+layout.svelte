@@ -10,7 +10,7 @@
   
 
 {#if $page.url.pathname === '/harvests'}
-    <div class="container p-4">
+    <div class="container">
         <div class="slot-container">
             <slot></slot>
         </div>
@@ -27,7 +27,8 @@
 
 <style>
     .container {
-        @apply flex flex-col;
+        @apply flex flex-col p-4;
+        max-width: none;
     }
     .slot-container {
         @apply overflow-y-scroll;
